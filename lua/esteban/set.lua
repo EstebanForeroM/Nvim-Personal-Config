@@ -9,7 +9,7 @@ vim.opt.expandtab = true
 
 -- Set the indentation to 2 spaces for TSX and JSX files
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact", "lua", "json", "html", "css" },
+  pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact", "lua", "json", "html", "css", "nix" },
   callback = function()
     vim.opt_local.tabstop = 2
     vim.opt_local.softtabstop = 2
