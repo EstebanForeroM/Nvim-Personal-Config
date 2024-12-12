@@ -8,7 +8,7 @@ vim.api.nvim_create_augroup('YankHighlight', {})
 vim.opt.termguicolors = true
 
 -- Define a custom highlight group with yellow background
-vim.api.nvim_set_hl(0, 'YankHighlightGroup', { fg = '#FFFFFF', bg = '#091057' })
+vim.api.nvim_set_hl(0, 'YankHighlightGroup', { fg = '#000000', bg = 'cyan' })
 -- the fg is the text color and the bg is the background color of the highlight
 -- yes you can change the text color too
 
@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank {
       higroup = 'YankHighlightGroup',
-      timeout = 100,  -- Duration in milliseconds
+      timeout = 30,  -- Duration in milliseconds
     }
   end,
 })
