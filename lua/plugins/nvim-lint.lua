@@ -6,16 +6,8 @@ return {
       require('lint').linters_by_ft = {
         markdown = {'vale'}, -- Example: Using 'vale' for markdown files
         rust = {'clippy'}
-
+        go = {'golangcilint'}
       }
-
-      local lint_progress = function()
-        local linters = require("lint").get_running()
-        if #linters == 0 then
-          return "󰦕"
-        end
-        return "󱉶 " .. table.concat(linters, ", ")
-      end
 
       -- Setup autocmd for linting on save
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
