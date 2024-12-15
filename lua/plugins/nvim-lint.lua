@@ -1,33 +1,54 @@
 return {
+  {
     "mfussenegger/nvim-lint",
-    event = { "BufReadPost", "BufNewFile" },  -- Load nvim-lint when reading or creating new files
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       local lint = require("lint")
 
-      -- Set linters by filetype:
+      -- Configure linters by filetype
       lint.linters_by_ft = {
-        rust = {"clippy"},       -- Uses Rust's clippy linter
-        go = {"golangcilint"},   -- Uses golangci-lint for Go
+        rust = {"clippy"},
+        go = {"golangcilint"},
       }
 
-      -- Configure an autocmd to run linting on save
-      vim.api.nvim_create_autocmd({"BufWritePost"}, {
+      -- Function to return a string of currently running linters
+      local function lint_progress()
+        local linters = lint.get_running()
+        if #linters == 0 then
+          -- No linters currently running
+          return ""
+        end
+        -- e.g., "󱉶 clippy" if clippy is running
+        return "󱉶 " .. table.concat(linters, ", ")
+      end
+
+      -- Example: Integrate with your statusline
+      -- If you're using a simple statusline, you might do something like:
+      -- vim.o.statusline = "%f %m%r%h%w [%"..lint_progress().."]%y%=%l,%c%V %P"
+      --
+      -- For a more dynamic solution, integrate lint_progress() with your statusline plugin
+      -- like lualine or feline.
+
+      -- Run linting on save
+      vim.api.nvim_create_autocmd({"BufWinEnter", "BufWritePost"}, {
         callback = function()
-          lint.try_lint()
+          require('lint').try_lint()
         end,
       })
 
-      -- Optionally, you can run specific linters regardless of filetype:
-      -- For example, after normal linting:
-      -- lint.try_lint("cspell")
 
-      -- If you want to customize diagnostic display:
+      -- If you want to trigger linting with a keymap:
+      -- vim.keymap.set('n', '<leader>l', function() lint.try_lint() end, { desc = "Run linters" })
+
+      -- Optional: Configure diagnostic display
       -- vim.diagnostic.config({
       --   virtual_text = true,
       --   signs = true,
       --   update_in_insert = false,
       -- })
 
+      -- Make lint_progress function accessible globally or in your statusline config
+      _G.lint_progress = lint_progress
     end,
   },
 }
