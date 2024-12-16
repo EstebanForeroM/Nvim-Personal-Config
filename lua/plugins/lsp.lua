@@ -6,7 +6,10 @@ return {
   },
   {
     "L3MON4D3/LuaSnip",
-    dependencies = { "rafamadriz/friendly-snippets" },
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      "saadparwaiz1/cmp_luasnip"
+    },
     config = function()
       require("luasnip.loaders.from_vscode").lazy_load()
     end
@@ -21,6 +24,8 @@ return {
       cmp.setup({
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'buffer',  keyword_length = 3 },
+          { name = 'luasnip' }
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
@@ -30,13 +35,12 @@ return {
         }),
         snippet = {
           expand = function(args)
-            vim.snippet.expand(args.body)
+            require('luasnip').lsp_expand(args.body)
           end,
         },
       })
     end
   },
-
   -- LSP
   {
     'neovim/nvim-lspconfig',
