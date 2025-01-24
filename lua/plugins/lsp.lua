@@ -39,6 +39,7 @@ return {
         sources = {
           { name = 'nvim_lsp' },
           { name = 'buffer',  keyword_length = 3 },
+          { name = 'path' },
           { name = 'luasnip' }
         },
         mapping = cmp.mapping.preset.insert({
