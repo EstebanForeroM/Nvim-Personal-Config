@@ -9,9 +9,9 @@ return {
       vendors = {
         deepseek = {
           __inherited_from = "openai",
-          api_key_name = "",
+          api_key_name = "???",
           endpoint = "https://api.deepseek.com",
-          model = "deepseek-coder",
+          model = "deepseek-chat",
         },
       },
     },
